@@ -9,4 +9,10 @@ const userSignupVildtion = Joi.object({
   _isBlocked: Joi.boolean(),
 }).options({ allowUnknown: true });
 
-export { userSignupVildtion };
+const userLoginVildtion = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+
+})
+
+export { userSignupVildtion ,userLoginVildtion };
