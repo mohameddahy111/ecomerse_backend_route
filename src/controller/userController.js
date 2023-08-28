@@ -53,13 +53,24 @@ export const updateUserProfile = handlerError(async(req , res ,next)=>{
   if (user.email !== email){
     const isExist = await User.findOne({ email: email})
     if (isExist) {
-      return next(new AppError(" this email is already in use" , 409));
+      return next(new AppError(" this email is already in use" , 409));   
     }
   }
 
-const hashPassword = bcrypt.hashSync(password , +process.env.SALTROUNDS)
-await User.findByIdAndUpdate({_id : req.userId} , {
-  name , password :hashPassword , email , phone
+const hashPassword =password ? bcrypt.hashSync(password , +process.env.SALTROUNDS):null;
+const findUser = await User.findByIdAndUpdate({_id : req.userId} , {
+  name , password :hashPassword?hashPassword:user.password , email , phone
 },{new:true})
 res.status(200).send({message :'success update' })
 })
+//-------------------------------delete user ---------------------------------//
+export const deleteUser =  handlerError(async (req , res , next)=>{
+  const {id  } = req.params;
+  const user = await User.findByIdAndDelete({_id : id})
+if (!user) {
+  return next(new AppError(' this user not found' , 404));
+}
+res.status(200).send({message :'success delete user'}) 
+})
+
+
