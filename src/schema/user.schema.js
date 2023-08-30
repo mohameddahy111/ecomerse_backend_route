@@ -9,6 +9,6 @@ const userSchame = new mongoose.Schema({
   _isAdmin: { type: Boolean, default: false },
   _isBlocked: { type: Boolean, default: false },
   _isVerify :{ type: Boolean, default: false}
-});
+},{timestamps :true});
 const User = mongoose.model('user', userSchame);
 export default User
