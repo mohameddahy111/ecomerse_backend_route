@@ -4,7 +4,7 @@ const subCategory = new mongoose.Schema({
   title :{type : String , required: true, unique: true },
   sub_image :{type : String },
 
-  categoryId :{type :Types.ObjectId , ref :'category'},
+  categoryId :{type :Types.ObjectId , ref :'category'}, 
   createdBy:{type :Types.ObjectId , ref :'user'},
   updatedBy:{type :Types.ObjectId , ref :'user'},
 

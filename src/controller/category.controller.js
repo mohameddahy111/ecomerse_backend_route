@@ -5,7 +5,7 @@ import { handlerError } from "../utils/handlerError.js";
 
 //----------------------------get All Categories------------------------------------//
 export const getAllCategories = handlerError(async (req, res, next) => {
-  const categories = await Category.find();
+  const categories = await Category.find().populate('subCategory');
   res.status(200).send(categories);
 });
 // ----------------------------Add Categories------------------------------------------//

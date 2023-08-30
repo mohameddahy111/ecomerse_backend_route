@@ -25,7 +25,7 @@ export const addSubCategory = handlerError(async (req, res, next) => {
 //-------------------------get All SubCategories-------------------------// 
 
 export const getAllSubCategories  = handlerError(async(req ,res ,next)=>{
-  const subCategories = await SubCategory.find().populate('categoryId' ,{title:1})
+  const subCategories = await SubCategory.find().populate([{path :'categoryId' ,populate:"createdBy" } ,{path :'createdBy' }])
   res.status(200).send(subCategories)
 }) 
 //-------------------------delete SubCategory---------------------------//
@@ -50,7 +50,7 @@ export const updateSubCategory = handlerError(async(req , res , next)=>{
     }
   }
   const img  = req.file ? await cloudinary.uploader.upload(req.file.path):null
-  const category = await SubCategory.findByIdAndUpdate({_id:id} , {
+ await SubCategory.findByIdAndUpdate({_id:id} , {
     title,
     image :img? img.secure_url:findCategory.image,
     categoryId
