@@ -14,7 +14,7 @@ export const adminAuth = (req, res, next) => {
       return next(new AppError("Error verifying token", 402));
     }
     const admin = await User.findById(decoded.id);
-    if (admin._isAdmin == true) {
+    if (admin?._isAdmin == true) {
       req.adminId = decoded.id;
       next();
     } else {
